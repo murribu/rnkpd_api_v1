@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427204650) do
+ActiveRecord::Schema.define(version: 20150428173612) do
+
+  create_table "episodes", force: :cascade do |t|
+    t.integer  "podcast_id",  limit: 4
+    t.string   "guid",        limit: 255
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.integer  "duration",    limit: 4
+    t.boolean  "explicit",    limit: 1
+    t.integer  "filesize",    limit: 4
+    t.string   "img",         limit: 255
+    t.string   "link",        limit: 255
+    t.datetime "pubdate"
+    t.string   "url",         limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "episodes", ["podcast_id"], name: "index_episodes_on_podcast_id", using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", limit: 4,     null: false
@@ -53,4 +71,14 @@ ActiveRecord::Schema.define(version: 20150427204650) do
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
+  create_table "podcasts", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "feed",       limit: 255
+    t.string   "url",        limit: 255
+    t.boolean  "active",     limit: 1
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_foreign_key "episodes", "podcasts"
 end
