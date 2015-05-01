@@ -11,7 +11,7 @@ class V1::PodcastsController < V1::V1Controller
   end
   
   private
-    def set_podcast
-      @podcast = Podcast.find(params[:id])
-    end
+  def set_podcast
+    @podcast = Podcast.find(params[:id])
+  end
 end
