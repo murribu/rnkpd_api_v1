@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   use_doorkeeper
   
+  root 'dashboard#index'
+  
   namespace :v1 do
     resources :podcasts
     get '/me' => "credentials#me"
