@@ -79,5 +79,5 @@ Rails.application.configure do
   
   
   config.action_mailer.default_url_options = { host: 'rnkpd.com' }
-  config.secret_key_base = ENV[“SECRET_KEY_BASE”]
+  config.secret_key_base = ENV["SECRET_KEY_BASE"]
 end
