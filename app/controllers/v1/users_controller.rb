@@ -5,6 +5,6 @@ class V1::UsersController < V1::V1Controller
   end
   
   def create
-    render :json => {'api_v1'}, User.create!(params[:user])
+    render :json => []
   end
 end
