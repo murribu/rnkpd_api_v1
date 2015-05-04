@@ -6,18 +6,26 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    fail "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
-    # Put your resource owner authentication logic here.
-    # Example implementation:
-    #   User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
+    @user = env[:clearance].current_user
+    
+    unless @user
+      session[:return_to] = request.fullpath
+      redirect_to(routes.sign_in_url)
+    end
+
+    @user
   end
+  # Put your resource owner authentication logic here.
+  # Example implementation:
+  #   User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
-  # admin_authenticator do
-  #   # Put your admin authentication logic here.
-  #   # Example implementation:
-  #   Admin.find_by_id(session[:admin_id]) || redirect_to(new_admin_session_url)
-  # end
+  admin_authenticator do
+    @user = env[:clearance].current_user
+    # Put your admin authentication logic here.
+    
+    @user.admin || redirect_to(root_path)
+  end
 
   # Authorization Code expiration time (default 10 minutes).
   # authorization_code_expires_in 10.minutes
@@ -95,7 +103,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  # grant_flows %w(authorization_code client_credentials)
+  grant_flows %w(authorization_code client_credentials)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.

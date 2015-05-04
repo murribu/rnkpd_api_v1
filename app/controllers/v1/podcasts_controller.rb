@@ -1,5 +1,5 @@
 class V1::PodcastsController < V1::V1Controller
-
+  before_action :doorkeeper_authorize!
   before_action :set_podcast, only: [:show, :edit, :update]
   
   def index
