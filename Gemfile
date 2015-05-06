@@ -38,6 +38,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'capybara'
   gem 'shoulda-matchers', require: false
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'faker'
   
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
